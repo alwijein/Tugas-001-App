@@ -12,7 +12,7 @@ class MyApp extends StatelessWidget {
       title: "Tugas Lab",
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primaryColor: Colors.lightBlue,
+        primaryColor: Color(0xFF64C7FE),
         accentColor: Colors.white,
         scaffoldBackgroundColor: Color(0xFFF3F5F7),
       ),

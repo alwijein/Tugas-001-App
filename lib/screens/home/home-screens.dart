@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:algoritma_genetika/method/konversi-des.dart';
+import 'dart:math' show pow;
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -10,11 +10,12 @@ class _HomeScreenState extends State<HomeScreen> {
   TextEditingController controller1 = new TextEditingController();
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
-  List crhomosome = new List(15);
+  List crhomosome = new List(16);
   List hasil = new List(5);
-  List subSub = new List(5);
-  List atoiX = new List(5);
-  bool chek = false;
+  List subSub = new List(20);
+  // List subSubOne = new List(20);
+  List atoiX = new List(20);
+
   var mataKuliah = [
     "web",
     "jarkom",
@@ -26,7 +27,12 @@ class _HomeScreenState extends State<HomeScreen> {
     "Pengantar Pemrograman",
     "Pemrograman Terstruktur",
     "APL",
-    "SPK"
+    "SPK",
+    "matematika dasar",
+    "statistika",
+    "robotika",
+    "algoritma",
+    "fisika"
   ];
   var dosen = [
     "dosen1",
@@ -39,7 +45,12 @@ class _HomeScreenState extends State<HomeScreen> {
     "dosen8",
     "dosen9",
     "dosen10",
-    "dosen11"
+    "dosen11",
+    "dosen12",
+    "dosen13",
+    "dosen14",
+    "dosen15",
+    "dosen16"
   ];
   var kelas = [
     "A1",
@@ -53,41 +64,56 @@ class _HomeScreenState extends State<HomeScreen> {
     "A9",
     "B1",
     "B2",
+    "B3",
+    "B4",
+    "B5",
+    "B6",
+    "B7"
   ];
   var waktu = [
     "senin, 07:40-09:20",
+    "senin, 09:20-11:00",
     "senin, 13:00-14:40",
     "senin, 14:40-16:20",
     "selasa, 07:40-09:20",
+    "selasa, 09:20-11:00",
     "selasa, 13:00-14:40",
     "selasa, 14:40-16:20",
     "rabu, 07:40-09:20",
+    "rabu, 09:20-11:00",
     "rabu, 13:00-14:40",
     "rabu, 14:40-16:20",
     "kamis, 07:40-09:20",
+    "kamis, 09:20-11:00",
+    "kamis, 13:00-14:40",
     "kamis, 13:00-14:40"
   ];
   var ruangan = [
-    "labrpl",
-    "labjarkom",
-    "labdasar",
-    "labindustri",
-    "labmultimedia",
-    "labriset",
-    "labrplbaru",
-    "ruanglab",
-    "labjaringanbaru",
-    "labfikom",
-    "labrobotika"
+    "lab dasar1",
+    "lab dasar2",
+    "lab dasar3",
+    "lab dasar4",
+    "lab jaringan1",
+    "lab jaringan2",
+    "lab jaringan3",
+    "lab jaringan4",
+    "lab multimedia1",
+    "lab multimedia2",
+    "lab multimedia3",
+    "lab multimedia4",
+    "lab micro1",
+    "lab micro2",
+    "lab micro3",
+    "lab micro4"
   ];
-  int startIndex = 0;
-  int endIndex = 4;
+
   int x = 0;
   var nol = 0;
   var satu = 0;
   var dua = 0;
   var tiga = 0;
   var empat = 0;
+  var cari;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -98,7 +124,36 @@ class _HomeScreenState extends State<HomeScreen> {
           "Tugas Lab",
           style: TextStyle(
               color: Theme.of(context).accentColor,
+              fontFamily: 'Redressed-Regular',
               fontWeight: FontWeight.bold),
+        ),
+      ),
+      drawer: Drawer(
+        child: ListView(
+          children: <Widget>[
+            DrawerHeader(
+              padding: EdgeInsets.all(30.0),
+              child: Container(
+                margin: EdgeInsets.all(30.0),
+                child: Text(
+                  "List Inputan",
+                  style: TextStyle(
+                      color: Theme.of(context).accentColor,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 30.0),
+                ),
+              ),
+              decoration: BoxDecoration(color: Theme.of(context).primaryColor),
+            ),
+            for (int i = 0; i < x; i++)
+              ListTile(
+                leading: Icon(Icons.data_usage),
+                title: Text(crhomosome[i]),
+                // onTap: () {
+                //   controller1.text = crhomosome[i];
+                // },
+              ),
+          ],
         ),
       ),
       body: SafeArea(
@@ -120,21 +175,18 @@ class _HomeScreenState extends State<HomeScreen> {
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            if (chek == true)
-                              Text("Lol")
-                            else
-                              for (int i = 0; i < 15; i++)
-                                if (controller1.text == crhomosome[i])
-                                  Card(
-                                    elevation: 16,
-                                    child: ListTile(
-                                      leading: Icon(Icons.sensor_door),
-                                      title: Text(
-                                        "Kelas : " + kelas[dua].toString(),
-                                        style: TextStyle(fontSize: 20.0),
-                                      ),
+                            for (int i = 0; i < x; i++)
+                              if (cari == crhomosome[i])
+                                Card(
+                                  elevation: 16,
+                                  child: ListTile(
+                                    leading: Icon(Icons.sensor_door),
+                                    title: Text(
+                                      "Kelas : " + kelas[dua].toString(),
+                                      style: TextStyle(fontSize: 20.0),
                                     ),
                                   ),
+                                ),
                             Card(
                               elevation: 16,
                               child: ListTile(
@@ -180,40 +232,6 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       ],
                     )),
-                // Row(
-                //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                //   children: [
-                // Container(
-                //   padding: EdgeInsets.all(10.0),
-                //   width: MediaQuery.of(context).size.width / 1.1,
-                //   height: MediaQuery.of(context).size.height / 3,
-                //   decoration: BoxDecoration(
-                //     borderRadius: BorderRadius.circular(10.0),
-                //     color: Theme.of(context).accentColor,
-                //     boxShadow: [
-                //       BoxShadow(
-                //         color: Colors.grey.withOpacity(0.5),
-                //         spreadRadius: 5,
-                //         blurRadius: 5,
-                //         offset: Offset(0, 3),
-                //       ),
-                //     ],
-                //   ),
-                //   child: ListView(
-                //     children: <Widget>[
-                //       Column(
-                //         crossAxisAlignment: CrossAxisAlignment.start,
-                //         children: [
-                //           for (var i = 0; i < x; i++)
-                //             Text(crhomosome[i].toString())
-                //         ],
-                //       )
-                //     ],
-                //   ),
-                //   // child: ListView,
-                // ),
-                //   ],
-                // ),
                 SizedBox(
                   height: 30.0,
                 ),
@@ -293,23 +311,34 @@ class _HomeScreenState extends State<HomeScreen> {
                       onPressed: () {
                         setState(() {
                           for (var i = 0; i < x; i++) {
-                            startIndex = 0;
-                            endIndex = 4;
-                            for (int j = 0; j < 5; j++) {
+                            int startIndex = 0;
+                            int endIndex = 1;
+                            for (int j = 0; j < 20; j++) {
                               subSub[j] =
                                   crhomosome[i].substring(startIndex, endIndex);
-                              startIndex = startIndex + 4;
-                              endIndex = endIndex + 4;
+                              startIndex = startIndex + 1;
+                              endIndex = endIndex + 1;
                             }
                           }
-
-                          for (int i = 0; i < 5; i++) {
-                            atoiX[i] = double.parse(subSub[i]);
+                          for (int i = 0; i < 20; i++) {
+                            atoiX[i] = int.parse(subSub[i]);
+                          }
+                          int n = 0;
+                          for (var i = 0; i < 20; i += 4) {
+                            int x1 = 0;
+                            int x2 = 0;
+                            int pangkat = 0;
+                            for (var j = 0; j < 4; j++) {
+                              x1 = atoiX[j] * pow(2, pangkat);
+                              x2 = x2 + x1;
+                              pangkat++;
+                            }
+                            hasil[n] = x2;
+                            n++;
                           }
 
-                          for (int i = 0; i < 5; i++) {
-                            hasil[i] = konversiDes(atoiX[i]);
-                          }
+                          cari = controller1.text;
+
                           nol = hasil[0];
                           satu = hasil[1];
                           dua = hasil[2];

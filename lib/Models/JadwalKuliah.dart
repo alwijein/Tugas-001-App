@@ -7,10 +7,9 @@ class JadwalKuliah {
 
   JadwalKuliah(
       {this.mataKuliah, this.dosen, this.kelas, this.waktu, this.ruangan});
-}
 
-List<JadwalKuliah> jadwalkuliah = [
-  JadwalKuliah(
+
+static JadwalKuliah jadwalkuliah = JadwalKuliah(
     mataKuliah: [
       "web",
       "jarkom",
@@ -64,5 +63,5 @@ List<JadwalKuliah> jadwalkuliah = [
       "labfikom",
       "labrobotika"
     ],
-  )
-];
+  );
+}

@@ -1,3 +1,5 @@
+import 'package:algoritma_genetika/Models/JadwalKuliah.dart';
+import 'package:algoritma_genetika/screens/home/SearchBiner.dart';
 import 'package:flutter/material.dart';
 import 'dart:math' show pow;
 
@@ -11,103 +13,15 @@ class _HomeScreenState extends State<HomeScreen> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
   List crhomosome = new List(16);
+  
   List hasil = new List(5);
+  
   List subSub = new List(20);
-  // List subSubOne = new List(20);
+
   List atoiX = new List(20);
 
-  var mataKuliah = [
-    "web",
-    "jarkom",
-    "struktur data",
-    "basis data I",
-    "basis data II",
-    "microcontroler",
-    "microprocessor",
-    "Pengantar Pemrograman",
-    "Pemrograman Terstruktur",
-    "APL",
-    "SPK",
-    "matematika dasar",
-    "statistika",
-    "robotika",
-    "algoritma",
-    "fisika"
-  ];
-  var dosen = [
-    "dosen1",
-    "dosen2",
-    "dosen3",
-    "dosen4",
-    "dosen5",
-    "dosen6",
-    "dosen7",
-    "dosen8",
-    "dosen9",
-    "dosen10",
-    "dosen11",
-    "dosen12",
-    "dosen13",
-    "dosen14",
-    "dosen15",
-    "dosen16"
-  ];
-  var kelas = [
-    "A1",
-    "A2",
-    "A3",
-    "A4",
-    "A5",
-    "A6",
-    "A7",
-    "A8",
-    "A9",
-    "B1",
-    "B2",
-    "B3",
-    "B4",
-    "B5",
-    "B6",
-    "B7"
-  ];
-  var waktu = [
-    "senin, 07:40-09:20",
-    "senin, 09:20-11:00",
-    "senin, 13:00-14:40",
-    "senin, 14:40-16:20",
-    "selasa, 07:40-09:20",
-    "selasa, 09:20-11:00",
-    "selasa, 13:00-14:40",
-    "selasa, 14:40-16:20",
-    "rabu, 07:40-09:20",
-    "rabu, 09:20-11:00",
-    "rabu, 13:00-14:40",
-    "rabu, 14:40-16:20",
-    "kamis, 07:40-09:20",
-    "kamis, 09:20-11:00",
-    "kamis, 13:00-14:40",
-    "kamis, 13:00-14:40"
-  ];
-  var ruangan = [
-    "lab dasar1",
-    "lab dasar2",
-    "lab dasar3",
-    "lab dasar4",
-    "lab jaringan1",
-    "lab jaringan2",
-    "lab jaringan3",
-    "lab jaringan4",
-    "lab multimedia1",
-    "lab multimedia2",
-    "lab multimedia3",
-    "lab multimedia4",
-    "lab micro1",
-    "lab micro2",
-    "lab micro3",
-    "lab micro4"
-  ];
-
   int x = 0;
+  
   var nol = 0;
   var satu = 0;
   var dua = 0;
@@ -118,8 +32,16 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
-      resizeToAvoidBottomInset: false,
+      resizeToAvoidBottomInset: true,
       appBar: AppBar(
+        actions: <Widget>[
+          IconButton(
+            onPressed: (){
+              // showSearch(context: context, delegate: SearchBiner());
+            },
+            icon: Icon(Icons.search),
+          ),
+        ],
         title: Text(
           "Tugas Lab",
           style: TextStyle(
@@ -162,9 +84,9 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Form(
             // ignore: deprecated_member_use
             autovalidate: true,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
+            child: ListView(
+              // mainAxisAlignment: MainAxisAlignment.start,
+              // crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Container(
                     padding: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 0.0),
@@ -174,60 +96,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       children: <Widget>[
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            for (int i = 0; i < x; i++)
-                              if (cari == crhomosome[i])
-                                Card(
-                                  elevation: 16,
-                                  child: ListTile(
-                                    leading: Icon(Icons.sensor_door),
-                                    title: Text(
-                                      "Kelas : " + kelas[dua].toString(),
-                                      style: TextStyle(fontSize: 20.0),
-                                    ),
-                                  ),
-                                ),
-                            Card(
-                              elevation: 16,
-                              child: ListTile(
-                                leading: Icon(Icons.more_time),
-                                title: Text(
-                                  "Waktu : " + waktu[empat].toString(),
-                                  style: TextStyle(fontSize: 20.0),
-                                ),
-                              ),
-                            ),
-                            Card(
-                              elevation: 16,
-                              child: ListTile(
-                                leading: Icon(Icons.book),
-                                title: Text(
-                                  "Matkul : " + mataKuliah[nol].toString(),
-                                  style: TextStyle(fontSize: 20.0),
-                                ),
-                              ),
-                            ),
-                            Card(
-                              elevation: 16,
-                              child: ListTile(
-                                leading: Icon(Icons.supervised_user_circle),
-                                title: Text(
-                                  "Dosen : " + dosen[satu].toString(),
-                                  style: TextStyle(fontSize: 20.0),
-                                ),
-                              ),
-                            ),
-                            Card(
-                              elevation: 16,
-                              child: ListTile(
-                                leading: Icon(Icons.arrow_right_alt_sharp),
-                                title: Text(
-                                  "Ruangan : " + ruangan[tiga].toString(),
-                                  style: TextStyle(fontSize: 20.0),
-                                ),
-                              ),
-                            ),
-                          ],
+                          children: this._listBiner(),
                           // 10011001100110011001
                         ),
                       ],
@@ -248,6 +117,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       setState(() {});
                     },
                     keyboardType: TextInputType.number,
+                    maxLength: 20,
                     controller: controller1,
                   ),
                 ),
@@ -356,6 +226,69 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
     );
+  }
+
+  List<Widget> _listBiner() {
+    List<Widget> temp = [];
+    for (int i = 0; i < x; i++) {
+      temp = [
+            Card(
+              elevation: 16,
+              child: ListTile(
+                leading: Icon(Icons.sensor_door),
+                title: Text(
+                  "Kelas : " + JadwalKuliah.jadwalkuliah.kelas[dua].toString(),
+                  style: TextStyle(fontSize: 20.0),
+                ),
+              ),
+            ),
+            Card(
+              elevation: 16,
+              child: ListTile(
+                leading: Icon(Icons.more_time),
+                title: Text(
+                  "Waktu : " +
+                      JadwalKuliah.jadwalkuliah.waktu[empat].toString(),
+                  style: TextStyle(fontSize: 20.0),
+                ),
+              ),
+            ),
+            Card(
+              elevation: 16,
+              child: ListTile(
+                leading: Icon(Icons.book),
+                title: Text(
+                  "Matkul : " +
+                      JadwalKuliah.jadwalkuliah.mataKuliah[nol].toString(),
+                  style: TextStyle(fontSize: 20.0),
+                ),
+              ),
+            ),
+            Card(
+              elevation: 16,
+              child: ListTile(
+                leading: Icon(Icons.supervised_user_circle),
+                title: Text(
+                  "Dosen : " + JadwalKuliah.jadwalkuliah.dosen[nol].toString(),
+                  style: TextStyle(fontSize: 20.0),
+                ),
+              ),
+            ),
+            Card(
+              elevation: 16,
+              child: ListTile(
+                leading: Icon(Icons.arrow_right_alt_sharp),
+                title: Text(
+                  "Ruangan : " +
+                      JadwalKuliah.jadwalkuliah.ruangan[tiga].toString(),
+                  style: TextStyle(fontSize: 20.0),
+                ),
+              ),
+            )
+          // ]
+      ];
+    }
+    return temp;
   }
 }
 
